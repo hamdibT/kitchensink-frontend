@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to JBoss!</title>
+  <link rel="stylesheet" href="assets/css/screen.css">
+</head>
+<body>
+<div id="container">
+
+  <div class="dualbrand">
+    <img src="assets/gfx/rhjb_eap_logo.png" width="300" height="175"/>
+  </div>
+  <div id="content">
+
+    <h1>Welcome to JBoss!</h1>
+    <div>
+      <p>You have successfully deployed a Jakarta EE Enterprise Application.</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #memberForm="ngForm">
+      <h2>Member Registration</h2>
+      <p>Enforces annotation-based constraints defined on the model class.</p>
+      <div *ngIf="errorMessage">
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <table>
+        <tbody>
+        <tr>
+          <td><label class="titleCell" for="name">Name:</label></td>
+          <td><input type="text" id="name" required [(ngModel)]="member.name" name="name" #name="ngModel"/></td>
+          <td><span *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid">Name is required.</span></td>
+        </tr>
+        <tr>
+          <td><label class="titleCell" for="email">Email:</label></td>
+          <td><input type="email" id="email" required [(ngModel)]="member.email" name="email" #email="ngModel"/></td>
+          <td><span *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid">Invalid email address.</span></td>
+        </tr>
+        <tr>
+          <td><label for="phoneNumber">Phone #:</label></td>
+          <td><input type="text" id="phoneNumber" required [(ngModel)]="member.phoneNumber" name="phoneNumber" #phoneNumber="ngModel"/></td>
+          <td><span *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="invalid">Phone number is required.</span></td>
+        </tr>
+        </tbody>
+      </table>
+      <p>
+      <table>
+        <tbody>
+        <tr>
+          <td><button type="submit" class="register" [disabled]="memberForm.invalid">Register</button></td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+      </p>
+    </form>
+
+    <h2>Members</h2>
+    <div *ngIf="members.length === 0">
+      <em>No registered members.</em>
+    </div>
+    <table *ngIf="members.length > 0" class="simpletablestyle">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone #</th>
+        <th>REST URL</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let member of members">
+        <td>{{ member.id }}</td>
+        <td>{{ member.name }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.phoneNumber }}</td>
+        <td><a [href]="'/members/' + member.id">/members/{{ member.id }}</a></td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="5">REST URL for all members: <a href="/members">/members</a></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div id="aside">
+    <p>Learn more about Red Hat JBoss Enterprise Application Platform.</p>
+    <ul>
+      <li><a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/">Documentation</a></li>
+      <li><a href="http://www.redhat.com/en/technologies/jboss-middleware/application-platform">Product Information</a></li>
+    </ul>
+  </div>
+  <div id="footer">
+    <p>
+      This project was generated from a Maven archetype from JBoss.<br/>
+    </p>
+  </div>
+</div>
+</body>
+</html>
