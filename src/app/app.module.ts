@@ -1,16 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {MemberRegistrationComponent} from './member-registration.component';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    MemberRegistrationComponent,
+    MemberRegistrationComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule, AppRoutingModule
+
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [MemberRegistrationComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

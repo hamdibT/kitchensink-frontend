@@ -147,7 +147,7 @@ input {
 }
 
 .simpletablestyle th {
-  background: url(#{request.contextPath}/resources/static/gfx/bkg-blkheader.png) black repeat-x top left;
+	background: url(#{request.contextPath}/resources/static/gfx/bkg-blkheader.png) black repeat-x top left;
   font-size:12px;
   font-weight:normal;
   padding:0 10px 0 5px;
@@ -168,7 +168,7 @@ input {
 }
 
 .simpletablestype tfoot {
-  height: 20px;
+	height: 20px;
   font-size: 10px;
   font-weight: bold;
   background-color: #EAECEE;
@@ -198,5 +198,5 @@ input {
 
 .simpletablestyle td a:hover {
   color:#3883ce;
-  text-decoration:none;
+  text-decoration:none; 
 }

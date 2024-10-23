@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Welcome to JBoss!</title>
-  <link rel="stylesheet" href="assets/css/screen.css">
 </head>
 <body>
 <div id="container">
@@ -18,29 +17,67 @@
       <p>You have successfully deployed a Jakarta EE Enterprise Application.</p>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #memberForm="ngForm">
+    <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
       <h2>Member Registration</h2>
       <p>Enforces annotation-based constraints defined on the model class.</p>
       <div *ngIf="errorMessage">
-        <span>{{ errorMessage }}</span>
+        <span class="invalid">{{ errorMessage }}</span>
       </div>
 
       <table>
         <tbody>
         <tr>
           <td><label class="titleCell" for="name">Name:</label></td>
-          <td><input type="text" id="name" required [(ngModel)]="member.name" name="name" #name="ngModel"/></td>
-          <td><span *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid">Name is required.</span></td>
+          <td><input type="text" id="name" required formControlName="name" name="name"/></td>
+          <td><span
+            *ngIf="memberForm.controls.name?.errors?.required && (memberForm.controls.name.touched || memberForm.controls.name.dirty)"
+            class="invalid">Name is required</span>
+            <span
+              *ngIf="memberForm.controls.name?.errors && (memberForm.controls.name.touched || memberForm.controls.name.dirty)"
+              class="invalid">{{ memberForm.controls.name.errors?.name }}</span>
+
+          </td>
         </tr>
         <tr>
           <td><label class="titleCell" for="email">Email:</label></td>
-          <td><input type="email" id="email" required [(ngModel)]="member.email" name="email" #email="ngModel"/></td>
-          <td><span *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid">Invalid email address.</span></td>
+          <td><input type="email" id="email" required formControlName="email" name="email"/></td>
+          <td>
+            <span
+              *ngIf="memberForm.controls.email?.errors?.required && (memberForm.controls.email.touched || memberForm.controls.email.dirty)"
+              class="invalid">Email is required</span>
+            <span
+              *ngIf="memberForm.controls.email?.errors && (memberForm.controls.email.touched || memberForm.controls.email.dirty)"
+              class="invalid">Must be a well-formed email address</span>
+
+          </td>
         </tr>
         <tr>
           <td><label for="phoneNumber">Phone #:</label></td>
-          <td><input type="text" id="phoneNumber" required [(ngModel)]="member.phoneNumber" name="phoneNumber" #phoneNumber="ngModel"/></td>
-          <td><span *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="invalid">Phone number is required.</span></td>
+          <td><input type="text" id="phoneNumber" required formControlName="phoneNumber" name="phoneNumber"/></td>
+          <td><span
+            *ngIf="memberForm.controls.phoneNumber?.errors?.required && (memberForm.controls.phoneNumber.touched || memberForm.controls.phoneNumber.dirty)"
+            class="invalid">    Phone number is required
+</span>
+            <span
+              *ngIf="memberForm.controls.phoneNumber?.errors && (memberForm.controls.phoneNumber.touched || memberForm.controls.phoneNumber.dirty)"
+              class="invalid">{{ memberForm.controls.phoneNumber.errors?.phoneNumber }}</span>
+            <span
+              *ngIf="memberForm.controls.phoneNumber?.errors?.minlength && (memberForm.controls.phoneNumber.touched || memberForm.controls.phoneNumber.dirty)"
+              class="invalid">
+    Phone number must be at least 10 characters long
+  </span>
+            <span
+              *ngIf="memberForm.controls.phoneNumber?.errors?.maxlength && (memberForm.controls.phoneNumber.touched || memberForm.controls.phoneNumber.dirty)"
+              class="invalid">
+              Phone number cannot be more than 12 characters long</span>
+            <span
+              *ngIf="memberForm.controls.phoneNumber?.errors?.pattern && (memberForm.controls.phoneNumber.touched || memberForm.controls.phoneNumber.dirty)"
+              class="invalid">
+      Phone number must contain only digits
+    </span>
+
+
+          </td>
         </tr>
         </tbody>
       </table>
@@ -48,12 +85,13 @@
       <table>
         <tbody>
         <tr>
-          <td><button type="submit" class="register" [disabled]="memberForm.invalid">Register</button></td>
+          <td>
+            <button type="submit" class="register" [disabled]="memberForm.invalid">Register</button>
+          </td>
           <td></td>
         </tr>
         </tbody>
       </table>
-      </p>
     </form>
 
     <h2>Members</h2>
@@ -76,12 +114,17 @@
         <td>{{ member.name }}</td>
         <td>{{ member.email }}</td>
         <td>{{ member.phoneNumber }}</td>
-        <td><a [href]="'/members/' + member.id">/members/{{ member.id }}</a></td>
+
+        <td><a href="#"
+               (click)="openNewTab(getMemberById(member.id)); $event.preventDefault();">/members/{{ member.id }}</a>
+        </td>
       </tr>
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="5">REST URL for all members: <a href="/members">/members</a></td>
+        <td colspan="5">REST URL for all members: <a a href="#"
+                                                     (click)="openNewTab(getMembers()); $event.preventDefault();">/members</a>
+        </td>
       </tr>
       </tfoot>
     </table>
@@ -90,8 +133,10 @@
   <div id="aside">
     <p>Learn more about Red Hat JBoss Enterprise Application Platform.</p>
     <ul>
-      <li><a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/">Documentation</a></li>
-      <li><a href="http://www.redhat.com/en/technologies/jboss-middleware/application-platform">Product Information</a></li>
+      <li><a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/">Documentation</a>
+      </li>
+      <li><a href="http://www.redhat.com/en/technologies/jboss-middleware/application-platform">Product Information</a>
+      </li>
     </ul>
   </div>
   <div id="footer">
